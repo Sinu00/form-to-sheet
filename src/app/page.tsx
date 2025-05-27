@@ -342,7 +342,7 @@ export default function Home() {
             {formFields.map((field) => (
               <div 
                 key={field.id} 
-                className={`col-span-1 ${field.id === 'deliveryDetails' || field.id === 'remark' ? 'md:col-span-2 lg:col-span-3' : ''}`}
+                className={`col-span-1 ${field.id === 'deliveryDetails' || field.id === 'remark' ? 'md:col-span-2 lg:col-span-3 mb-2' : ''}`}
               >
                 <label 
                   htmlFor={field.id} 
@@ -366,9 +366,9 @@ export default function Home() {
                     {...register(field.id as keyof FormData)}
                     className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-black placeholder-gray-600 ${errors[field.id as keyof typeof errors] ? 'border-red-300' : ''}`}
                     placeholder={field.placeholder}
-                    rows={5}
+                    rows={4}
                     disabled={isSubmitting}
-                    style={{ minHeight: '120px'}}
+                    style={{ minHeight: '120px', padding: '12px', resize: 'vertical', lineHeight: '1.5' }}
                   />
                 ) : field.type === 'select' && field.options ? (
                   <select
@@ -542,10 +542,10 @@ export default function Home() {
                           {row.deliveryDate ? new Date(row.deliveryDate).toLocaleDateString() : '-'}
                         </td>
                         <td className="px-3 py-4 text-sm text-gray-500 max-w-xs">
-                          <div className="line-clamp-2">{row.deliveryDetails}</div>
+                          <div className="line-clamp-2 whitespace-normal break-words">{row.deliveryDetails}</div>
                         </td>
                         <td className="px-3 py-4 text-sm text-gray-500 max-w-xs">
-                          <div className="line-clamp-2">{row.remark || '-'}</div>
+                          <div className="line-clamp-2 whitespace-normal break-words">{row.remark || '-'}</div>
                         </td>
                       </tr>
                     ))}
