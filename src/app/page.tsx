@@ -45,7 +45,7 @@ type FormData = z.infer<typeof formSchema>;
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<TabType>('add');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | null>(null);
   const [sheetData, setSheetData] = useState<SheetRow[]>([]);
@@ -559,7 +559,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                 </svg>
                 <p className="text-gray-500 text-lg">No job entries available yet</p>
-                <p className="text-gray-400 mt-2">Add your first entry using the "Add New Entry" tab</p>
+                <p className="text-gray-400 mt-2">Add your first entry using the &quot;Add New Entry&quot; tab</p>
                 <button 
                   onClick={() => setActiveTab('add')} 
                   className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 inline-flex items-center"
