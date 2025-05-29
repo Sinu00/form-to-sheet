@@ -314,18 +314,46 @@ export default function Home() {
           </nav>
         </div>
 
+        {/* Toast Notification */}
         {submitStatus && (
-          <div className={`mb-6 p-4 rounded-md flex items-center ${submitStatus.success ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
-            {submitStatus.success ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            )}
-            {submitStatus.message}
+          <div className="fixed bottom-4 right-4 z-50 max-w-sm w-full">
+            <div 
+              className={`${submitStatus.success ? 'bg-green-500' : 'bg-red-500'} 
+                rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 ease-in-out animate-enter`}
+              style={{animation: 'slideIn 0.3s ease-out forwards'}}
+            >
+              <div className="p-4 flex items-start">
+                <div className="flex-shrink-0">
+                  {submitStatus.success ? (
+                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ) : (
+                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  )}
+                </div>
+                <div className="ml-3 w-0 flex-1 pt-0.5">
+                  <p className="text-sm font-medium text-white">
+                    {submitStatus.success ? 'Success!' : 'Error!'}
+                  </p>
+                  <p className="mt-1 text-sm text-white opacity-90">
+                    {submitStatus.message}
+                  </p>
+                </div>
+                <div className="ml-4 flex-shrink-0 flex">
+                  <button
+                    className="inline-flex text-white focus:outline-none focus:text-gray-200 rounded-md"
+                    onClick={() => setSubmitStatus(null)}
+                  >
+                    <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

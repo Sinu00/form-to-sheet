@@ -2,12 +2,56 @@ import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const READ_SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
 const SHEET_NAME = 'Sheet1';
+
+// Function to check if a job number already exists
+async function checkJobNumberExists(jobNumber: string) {
+  try {
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      },
+      scopes: READ_SCOPES,
+    });
+
+    const sheets = google.sheets({ version: 'v4', auth });
+    
+    // Get all existing job numbers from the sheet
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_NAME}!A:A`, // Column A contains job numbers
+    });
+
+    const jobNumbers = response.data.values || [];
+    
+    // Check if the job number exists (skip header row)
+    return jobNumbers.slice(1).some(row => row[0] === jobNumber);
+  } catch (error) {
+    console.error('Error checking job number uniqueness:', error);
+    throw error;
+  }
+}
 
 // This is the API route that will handle form submissions
 export async function POST(request: Request) {
   try {
+    const body = await request.json();
+    
+    // Check if the job number already exists
+    const jobNumberExists = await checkJobNumberExists(body.jobNumber);
+    if (jobNumberExists) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: 'Job number already exists. Please use a unique job number.'
+        },
+        { status: 400 }
+      );
+    }
+    
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -17,7 +61,6 @@ export async function POST(request: Request) {
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
-    const body = await request.json();
 
     // Get the current date and time for submission tracking
     const submissionDate = new Date().toISOString();
