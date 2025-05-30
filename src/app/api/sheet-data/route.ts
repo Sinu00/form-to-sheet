@@ -22,7 +22,7 @@ export async function GET() {
     // Get all data from the sheet
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId,
-      range: 'Sheet1!A:N', // Columns A to N to match all our fields
+      range: 'Sheet1!A:O', // Columns A to O to match all our fields including job source
     });
 
     const data = response.data.values || [];

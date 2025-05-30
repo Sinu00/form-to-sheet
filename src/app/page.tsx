@@ -13,6 +13,7 @@ interface SheetRow {
   customerName: string;
   jobName: string;
   jobLocation: string;
+  jobSource: string;
   salesPerson: string;
   jobSize: string;
   quantity: string;
@@ -30,6 +31,7 @@ const formSchema = z.object({
   customerName: z.string().min(1, 'Customer Name is required'),
   jobName: z.string().min(1, 'Job Name is required'),
   jobLocation: z.string().min(1, 'Job Location is required'),
+  jobSource: z.string().min(1, 'Job Source is required'),
   salesPerson: z.string().min(1, 'Sales Person is required'),
   jobSize: z.string().min(1, 'Job Size is required'),
   quantity: z.string().min(1, 'Quantity is required'),
@@ -76,15 +78,16 @@ export default function Home() {
           customerName: row[1] || '',
           jobName: row[2] || '',
           jobLocation: row[3] || '',
-          salesPerson: row[4] || '',
-          jobSize: row[5] || '',
-          quantity: row[6] || '',
-          jobCategory: row[7] || '',
-          jobBookedDate: row[8] || '',
-          jobStatus: row[9] || '',
-          deliveryDate: row[10] || '',
-          deliveryDetails: row[11] || '',
-          remark: row[12] || ''
+          jobSource: row[4] || '',
+          salesPerson: row[5] || '',
+          jobSize: row[6] || '',
+          quantity: row[7] || '',
+          jobCategory: row[8] || '',
+          jobBookedDate: row[9] || '',
+          jobStatus: row[10] || '',
+          deliveryDate: row[11] || '',
+          deliveryDetails: row[12] || '',
+          remark: row[13] || ''
         }));
         setSheetData(rows);
       }
@@ -134,6 +137,13 @@ export default function Home() {
       label: 'Job Location',
       type: 'text',
       placeholder: 'Enter job location',
+      required: true
+    },
+    {
+      id: 'jobSource',
+      label: 'Job Source',
+      type: 'text',
+      placeholder: 'Enter job source',
       required: true
     },
     {
@@ -514,6 +524,9 @@ export default function Home() {
                         Location
                       </th>
                       <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Source
+                      </th>
+                      <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Sales Person
                       </th>
                       <th scope="col" className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -550,6 +563,7 @@ export default function Home() {
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{row.customerName}</td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{row.jobName}</td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{row.jobLocation}</td>
+                        <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{row.jobSource}</td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{row.salesPerson}</td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{row.jobSize}</td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">{row.quantity}</td>

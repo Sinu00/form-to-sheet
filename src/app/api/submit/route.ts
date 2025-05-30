@@ -71,6 +71,7 @@ export async function POST(request: Request) {
       body.customerName,
       body.jobName,
       body.jobLocation,
+      body.jobSource,
       body.salesPerson,
       body.jobSize,
       body.quantity,
@@ -86,7 +87,7 @@ export async function POST(request: Request) {
     // Append the data to the sheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A:N`, // Updated to include all columns
+      range: `${SHEET_NAME}!A:O`, // Updated to include all columns including job source
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [rowData],
